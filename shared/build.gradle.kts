@@ -1,5 +1,8 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.NativeBuildType
+import org.jetbrains.kotlin.konan.target.Family
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -16,23 +19,27 @@ kotlin {
     }
     
     listOf(
-        iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
-            baseName = "Shared"
-            isStatic = true
+    ).takeIf { "XCODE_VERSION_MAJOR" in System.getenv().keys } // Export the framework only for Xcode builds
+        ?.forEach {
+            // This `shared` framework is exported for app-ios-swift
+            it.binaries.framework {
+                baseName = "shared" // Used in app-ios-swift
+
+                export(libs.decompose.decompose)
+                export(libs.essenty.lifecycle)
+                export(libs.essenty.stateKeeper)
+                export(libs.essenty.instanceKeeper)
+            }
         }
-    }
     
     sourceSets {
         commonMain.dependencies {
-
-            implementation(libs.kmp.decompose)
-            implementation(libs.kmp.decompose.essenty.lifecycle)
-            implementation(libs.kmp.decompose.essenty.stateKeeper)
-            implementation(libs.kmp.decompose.essenty.instanceKeeper)
+            api(libs.decompose.decompose)
+            api(libs.essenty.lifecycle)
+            api(libs.essenty.stateKeeper)
+            api(libs.essenty.instanceKeeper)
             implementation(libs.ktor.client.core)
             implementation(libs.jetbrains.kotlinx.serialization.json)
         }

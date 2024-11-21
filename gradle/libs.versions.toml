@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.7.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -21,6 +21,10 @@ kmp-decompose-essenty = "2.1.0"
 kmp-parcelize-darwin = "0.2.4"
 kotlinx-coroutines = "1.9.0"
 
+
+decompose = "3.1.0"
+essenty = "2.1.0"
+
 [libraries]
 
 kotlinx-coroutines-test = {module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines"}
@@ -29,11 +33,9 @@ jetbrains-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor"}
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor"}
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor"}
-kmp-decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "kmp-decompose"}
 kmp-decompose-ext-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "kmp-decompose"}
-kmp-decompose-essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "kmp-decompose-essenty"}
-kmp-decompose-essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "kmp-decompose-essenty"}
-kmp-decompose-essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "kmp-decompose-essenty"}
+essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty"}
+essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty"}
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -46,6 +48,9 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+decompose-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+essenty-lifecycle = { group = "com.arkivanov.essenty", name = "lifecycle", version.ref = "essenty" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

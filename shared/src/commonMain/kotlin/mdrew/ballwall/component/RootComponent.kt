@@ -5,6 +5,7 @@ import com.arkivanov.decompose.router.stack.ChildStack
 import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
+import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
@@ -16,6 +17,7 @@ interface RootComponent : Component<RootComponent.State,RootComponent.RootError>
     val stack: Value<ChildStack<*, Child>>
 
     fun onBackClicked()
+    fun onBackClicked(toIndex: Int)
 
     sealed interface RootError : Component.ComponentError
 
@@ -56,6 +58,10 @@ class RootComponentImpl(
 
     override fun onBackClicked() {
         navigation.pop()
+    }
+
+    override fun onBackClicked(toIndex: Int) {
+        navigation.popTo(toIndex)
     }
 
     override fun onStart() {
