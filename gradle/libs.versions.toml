@@ -27,15 +27,15 @@ essenty = "2.1.0"
 
 [libraries]
 
-kotlinx-coroutines-test = {module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines"}
-ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor"}
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 jetbrains-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor"}
-ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor"}
-ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor"}
-kmp-decompose-ext-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "kmp-decompose"}
-essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty"}
-essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty"}
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+decompose-ext-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "kmp-decompose" }
+essenty-stateKeeper = { group = "com.arkivanov.essenty", name = "state-keeper", version.ref = "essenty" }
+essenty-instanceKeeper = { group = "com.arkivanov.essenty", name = "instance-keeper", version.ref = "essenty" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

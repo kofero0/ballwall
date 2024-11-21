@@ -1,0 +1,5 @@
+<resources>
+    <string name="logincomponent_loginbutton_label">Login</string>
+    <string name="logincomponent_signupbutton_label">Sign Up</string>
+    <string name="logincomponent_guestbutton_label">Guest</string>
+</resources>

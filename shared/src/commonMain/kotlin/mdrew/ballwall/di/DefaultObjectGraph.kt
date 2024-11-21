@@ -13,16 +13,18 @@ import mdrew.ballwall.component.SplashComponentImpl
 object DefaultObjectGraph {
     fun rootComponent(
         componentContext: ComponentContext
-    ) : RootComponent = RootComponentImpl(
+    ): RootComponent = RootComponentImpl(
         componentContext = componentContext,
         splashBuilder = splashBuilder(),
         homeBuilder = homeBuilder(),
         loginBuilder = loginBuilder()
     )
 
-    private fun loginBuilder() = LoginComponent.Builder { LoginComponentImpl(componentContext = it) }
+    private fun loginBuilder() =
+        LoginComponent.Builder { LoginComponentImpl(componentContext = it) }
 
     private fun homeBuilder() = HomeComponent.Builder { HomeComponentImpl(componentContext = it) }
 
-    private fun splashBuilder() = SplashComponent.Builder { SplashComponentImpl(componentContext = it) }
+    private fun splashBuilder() =
+        SplashComponent.Builder { SplashComponentImpl(componentContext = it) }
 }

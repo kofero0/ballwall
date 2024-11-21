@@ -18,7 +18,8 @@ interface HomeComponent :
     }
 }
 
-class HomeComponentImpl(componentContext: ComponentContext): HomeComponent, ComponentContext by componentContext {
+class HomeComponentImpl(componentContext: ComponentContext) : HomeComponent,
+    ComponentContext by componentContext {
     override fun onAction(action: HomeComponent.Action) {
     }
 

@@ -9,11 +9,10 @@ import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.Serializable
 
-interface RootComponent : Component<RootComponent.State,RootComponent.RootError>, BackHandlerOwner {
+interface RootComponent : Component<RootComponent.State, RootComponent.RootError>,
+    BackHandlerOwner {
     val stack: Value<ChildStack<*, Child>>
 
     fun onBackClicked()
@@ -27,16 +26,16 @@ interface RootComponent : Component<RootComponent.State,RootComponent.RootError>
 
     sealed class Child {
         class Splash(val component: SplashComponent) : Child()
-        class Login(val component: LoginComponent): Child()
+        class Login(val component: LoginComponent) : Child()
         class Home(val component: HomeComponent) : Child()
     }
 }
 
 class RootComponentImpl(
     componentContext: ComponentContext,
-    private val splashBuilder:SplashComponent.Builder,
-    private val homeBuilder:HomeComponent.Builder,
-    private val loginBuilder:LoginComponent.Builder
+    private val splashBuilder: SplashComponent.Builder,
+    private val homeBuilder: HomeComponent.Builder,
+    private val loginBuilder: LoginComponent.Builder
 ) : RootComponent, ComponentContext by componentContext {
 
     private val navigation = StackNavigation<Config>()
@@ -77,9 +76,9 @@ class RootComponentImpl(
         data object Splash : Config
 
         @Serializable
-        data object Login: Config
+        data object Login : Config
 
         @Serializable
-        data object Home: Config
+        data object Home : Config
     }
 }
