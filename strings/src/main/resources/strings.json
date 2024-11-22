@@ -1,0 +1,41 @@
+[
+  {
+    "key": "logincomponent_loginbutton_label",
+    "values": [
+      {
+        "locale": "en",
+        "value": "Login"
+      },
+      {
+        "locale": "es",
+        "value": "Acceso"
+      }
+    ]
+  },
+  {
+    "key": "logincomponent_guestbutton_label",
+    "values": [
+      {
+        "locale": "en",
+        "value": "Guest"
+      },
+      {
+        "locale": "es",
+        "value": "Invitado"
+      }
+    ]
+  },
+  {
+    "key": "logincomponent_signupbutton_label",
+    "values": [
+      {
+        "locale": "en",
+        "value": "Sign Up"
+      },
+      {
+        "locale": "es",
+        "value": "Inscribirse"
+      }
+    ]
+  }
+]

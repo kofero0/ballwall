@@ -16,3 +16,6 @@ captures
 !*.xcodeproj/project.xcworkspace/
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
+composeApp/src/commonMain/composeResources/values-en/strings.xml
+composeApp/src/commonMain/composeResources/values-es/strings.xml
+iosApp/Localizable.xcstrings

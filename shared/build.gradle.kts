@@ -18,12 +18,10 @@ kotlin {
     listOf(
         iosArm64(),
         iosSimulatorArm64()
-    ).takeIf { "XCODE_VERSION_MAJOR" in System.getenv().keys } // Export the framework only for Xcode builds
+    ).takeIf { "XCODE_VERSION_MAJOR" in System.getenv().keys }
         ?.forEach {
-            // This `shared` framework is exported for app-ios-swift
             it.binaries.framework {
-                baseName = "shared" // Used in app-ios-swift
-
+                baseName = "shared"
                 export(libs.decompose.decompose)
                 export(libs.essenty.lifecycle)
                 export(libs.essenty.stateKeeper)
@@ -53,4 +51,8 @@ android {
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
+}
+
+tasks.matching { it.group == "build" }.forEach { task ->
+    task.dependsOn(":strings:run")
 }
