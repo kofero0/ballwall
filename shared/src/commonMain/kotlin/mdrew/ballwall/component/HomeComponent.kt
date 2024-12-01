@@ -20,11 +20,9 @@ interface HomeComponent :
 
 class HomeComponentImpl(componentContext: ComponentContext) : HomeComponent,
     ComponentContext by componentContext {
-    override fun onAction(action: HomeComponent.Action) {
-    }
+    override fun onAction(action: HomeComponent.Action) {}
 
-    override fun onStart() {
-    }
+    override fun onStart() {}
 
     private val _state = MutableValue(HomeComponent.State())
     override val state: Value<HomeComponent.State> = _state

@@ -52,7 +52,3 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
     }
 }
-
-tasks.matching { it.group == "build" }.forEach { task ->
-    task.dependsOn(":strings:run")
-}

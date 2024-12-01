@@ -6,6 +6,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
+import com.arkivanov.decompose.router.stack.pushToFront
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
@@ -52,7 +53,7 @@ class RootComponentImpl(
         when (config) {
             is Config.Splash -> RootComponent.Child.Splash(splashBuilder.build(componentContext))
             Config.Home -> RootComponent.Child.Home(homeBuilder.build(componentContext))
-            Config.Login -> RootComponent.Child.Login(loginBuilder.build(componentContext))
+            Config.Login -> RootComponent.Child.Login(loginBuilder.build(componentContext = componentContext, toHomeComponent = { navigation.pushToFront(Config.Home) }))
         }
 
     override fun onBackClicked() {

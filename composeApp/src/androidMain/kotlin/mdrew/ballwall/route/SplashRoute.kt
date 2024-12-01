@@ -1,6 +1,7 @@
 package mdrew.ballwall.route
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,7 +17,7 @@ fun SplashRoute(component: SplashComponent, modifier: Modifier = Modifier) {
     LifecycleEventEffect(Lifecycle.Event.ON_START) {
         component.onStart()
     }
-    Column {
+    Column(modifier = modifier.fillMaxSize()) {
         Text(stringResource(Res.string.logincomponent_loginbutton_label))
     }
 }

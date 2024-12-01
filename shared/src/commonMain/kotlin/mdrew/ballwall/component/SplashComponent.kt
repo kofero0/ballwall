@@ -24,4 +24,5 @@ class SplashComponentImpl(componentContext: ComponentContext) : SplashComponent,
     private val _state = MutableValue(SplashComponent.State())
     override val state: Value<SplashComponent.State> = _state
 
+
 }

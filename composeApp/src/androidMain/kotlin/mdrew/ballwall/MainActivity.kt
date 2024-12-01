@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.defaultComponentContext
 import mdrew.ballwall.di.DefaultObjectGraph
+import mdrew.ballwall.di.PlatformObjectGraph
 import mdrew.ballwall.route.RootRoute
 
 class MainActivity : ComponentActivity() {
@@ -15,7 +16,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RootRoute(
-                component = DefaultObjectGraph.rootComponent(defaultComponentContext()),
+                component = DefaultObjectGraph(PlatformObjectGraph(context = this)).rootComponent(defaultComponentContext()),
                 modifier = Modifier.fillMaxSize()
             )
         }
