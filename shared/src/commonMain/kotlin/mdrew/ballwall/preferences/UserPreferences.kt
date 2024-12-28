@@ -8,11 +8,7 @@ interface UserPreferences {
         REMEMBER_LOGIN("remember_login"),
         USERNAME("user"),
         PASSWORD("pass"),
-        API_TOKEN("api_token")
+        API_TOKEN("api_token"),
+        API_TOKEN_TIME("api_token_time")
     }
-}
-
-@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-expect class UserPreferencesBuilder {
-    fun build(): UserPreferences
 }

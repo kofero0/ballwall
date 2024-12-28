@@ -7,6 +7,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popTo
 import com.arkivanov.decompose.router.stack.pushToFront
+import com.arkivanov.decompose.router.stack.replaceAll
 import com.arkivanov.decompose.value.MutableValue
 import com.arkivanov.decompose.value.Value
 import com.arkivanov.essenty.backhandler.BackHandlerOwner
@@ -51,9 +52,20 @@ class RootComponentImpl(
 
     private fun child(config: Config, componentContext: ComponentContext): RootComponent.Child =
         when (config) {
-            is Config.Splash -> RootComponent.Child.Splash(splashBuilder.build(componentContext))
+            is Config.Splash -> RootComponent.Child.Splash(
+                splashBuilder.build(componentContext = componentContext,
+                    toHome = { navigation.replaceAll(Config.Home) },
+                    toLogin = { navigation.replaceAll(Config.Login(it)) })
+            )
+
             Config.Home -> RootComponent.Child.Home(homeBuilder.build(componentContext))
-            Config.Login -> RootComponent.Child.Login(loginBuilder.build(componentContext = componentContext, toHomeComponent = { navigation.pushToFront(Config.Home) }))
+            is Config.Login -> RootComponent.Child.Login(
+                loginBuilder.build(
+                    componentContext = componentContext, toHomeComponent = {
+                        navigation.replaceAll(Config.Home)
+                    }, initialError = config.initialError
+                )
+            )
         }
 
     override fun onBackClicked() {
@@ -77,7 +89,7 @@ class RootComponentImpl(
         data object Splash : Config
 
         @Serializable
-        data object Login : Config
+        data class Login(val initialError: LoginComponent.LoginError? = null) : Config
 
         @Serializable
         data object Home : Config

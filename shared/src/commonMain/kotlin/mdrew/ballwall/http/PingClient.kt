@@ -12,16 +12,16 @@ import kotlinx.serialization.json.longOrNull
 import mdrew.ballwall.Result
 
 
-fun interface RegisterClient {
-    suspend fun register(request: Request): Result<Response, Error>
+fun interface PingClient {
+    suspend fun ping(request: Request): Result<Response, Error>
 
-    data class Response(val apiToken: String, val time: Long) {
+    data class Response(val version: String, val time: Long) {
         fun interface Deserializer {
             fun deserialize(response: String): Response
         }
     }
 
-    data class Request(val user: String, val pass: String) {
+    data class Request(val deviceId: String) {
         fun interface Serializer {
             fun serialize(request: Request): String
         }
@@ -34,34 +34,32 @@ fun interface RegisterClient {
     }
 }
 
-private fun hashedPasswordRegisterSerializer(passwordHasher: (String) -> String) =
-    RegisterClient.Request.Serializer { request ->
-        "{\"user\":${request.user}, \"passHash\":${passwordHasher(request.pass)}}"
+private fun pingSerializer() =
+    PingClient.Request.Serializer { request ->
+        "{\"deviceId\":${request.deviceId}}"
     }
 
-private fun defaultRegisterDeserializer() = RegisterClient.Response.Deserializer { response ->
+private fun pingDeserializer() = PingClient.Response.Deserializer { response ->
     val json = Json.parseToJsonElement(response).jsonObject
-    RegisterClient.Response(
-        apiToken = json["token"]?.jsonPrimitive?.content ?: "",
+    PingClient.Response(
+        version = json["version"]?.jsonPrimitive?.content ?: "",
         time = json["time"]?.jsonPrimitive?.longOrNull ?: 0L
     )
 }
 
-internal fun defaultRegisterClient(
+internal fun defaultPingClient(
     httpClient: HttpClient,
     url: String,
-    serializer: RegisterClient.Request.Serializer = hashedPasswordRegisterSerializer {
-        it.hashCode().toString()
-    },
-    deserializer: RegisterClient.Response.Deserializer = defaultRegisterDeserializer()
-) = RegisterClient { request ->
+    serializer: PingClient.Request.Serializer = pingSerializer(),
+    deserializer: PingClient.Response.Deserializer = pingDeserializer()
+) = PingClient { request ->
     val response = httpClient.post(url) {
         setBody(serializer.serialize(request))
     }
     when (response.status) {
         HttpStatusCode.OK -> Result.Success(deserializer.deserialize(response.bodyAsText()))
         else -> Result.Failure(
-            RegisterClient.Error.HttpError(
+            PingClient.Error.HttpError(
                 statusCode = response.status.value, response.bodyAsText()
             )
         )

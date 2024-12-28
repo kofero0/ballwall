@@ -26,6 +26,7 @@ interface LoginComponent :
 
     sealed interface LoginError : Component.ComponentError {
         data class Http(val error: mdrew.ballwall.http.HttpError) : LoginError
+        data object SplashLoginFailed: LoginError
         data object Other : LoginError
     }
 
@@ -40,7 +41,7 @@ interface LoginComponent :
     ) : Component.UIState<LoginError>
 
     fun interface Builder {
-        fun build(componentContext: ComponentContext, toHomeComponent: () -> Unit): LoginComponent
+        fun build(componentContext: ComponentContext, toHomeComponent: () -> Unit, initialError: LoginError?): LoginComponent
     }
 }
 
@@ -50,7 +51,8 @@ class LoginComponentImpl(
     private val loginClient: LoginClient,
     private val registerClient: RegisterClient,
     private val dispatcherProvider: DispatcherProvider,
-    private val toHomeComponent: () -> Unit
+    private val toHomeComponent: () -> Unit,
+    initialError: LoginComponent.LoginError? = null
 ) : LoginComponent, ComponentContext by componentContext {
 
     override fun onAction(action: LoginComponent.Action) = when (action) {
@@ -141,6 +143,6 @@ class LoginComponentImpl(
     override fun onStart() {
     }
 
-    private val _state = MutableValue(LoginComponent.State())
+    private val _state = MutableValue(LoginComponent.State(error = initialError))
     override val state: Value<LoginComponent.State> = _state
 }

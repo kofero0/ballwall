@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             RootRoute(
-                component = DefaultObjectGraph(PlatformObjectGraph(context = this)).rootComponent(defaultComponentContext()),
+                component = DefaultObjectGraph(PlatformObjectGraph(activity = this)).rootComponent(defaultComponentContext()),
                 modifier = Modifier.fillMaxSize()
             )
         }

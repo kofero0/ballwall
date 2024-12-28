@@ -8,16 +8,11 @@ import io.ktor.http.HttpStatusCode
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.longOrNull
 import mdrew.ballwall.Result
 
 fun interface LoginClient {
     suspend fun login(request: Request): Result<Response, Error>
-
-    data class Response(val apiToken: String?) {
-        fun interface Deserializer {
-            fun deserialize(response: String): Response
-        }
-    }
 
     data class Request(val user: String, val pass: String) {
         fun interface Serializer {
@@ -25,20 +20,30 @@ fun interface LoginClient {
         }
     }
 
-    sealed interface Error: HttpError {
+    data class Response(val apiToken: String, val time: Long) {
+        fun interface Deserializer {
+            fun deserialize(response: String): Response
+        }
+    }
+
+    sealed interface Error : HttpError {
         data object ConnectionRefused : Error
         data class HttpError(val statusCode: Int, val body: String) : Error
         data object Other : Error
     }
 }
 
-private fun hashedPasswordLoginSerializer(passwordHasher: (String) -> String) =
+private fun hashedPasswordLoginSerializer(hasher: (String) -> String) =
     LoginClient.Request.Serializer { request ->
-        "{\"user\":${request.user}, \"passHash\":${passwordHasher(request.pass)}}"
+        "{\"user\":${request.user}, \"passHash\":${hasher(request.pass)}}"
     }
 
 private fun defaultLoginDeserializer() = LoginClient.Response.Deserializer { response ->
-    LoginClient.Response(Json.parseToJsonElement(response).jsonObject["token"]?.jsonPrimitive?.content)
+    val json = Json.parseToJsonElement(response).jsonObject
+    LoginClient.Response(
+        apiToken = json["token"]?.jsonPrimitive?.content ?: "",
+        time = json["time"]?.jsonPrimitive?.longOrNull ?: 0L
+    )
 }
 
 internal fun defaultLoginClient(
